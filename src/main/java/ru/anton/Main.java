@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Main {
@@ -46,7 +47,7 @@ public class Main {
             System.out.println("Введите 'да' или 'нет': ");
             inputData = reader.readLine();
             if (inputData.equals("no") || inputData.equals("n") || inputData.equals("нет")) {
-                logger.info(String.valueOf(results));
+                statistics(results, i);
                 reader.close();
                 break;
             } else i++;
@@ -78,6 +79,15 @@ public class Main {
             otherDoor = random.nextInt(3)+1;
         }
         return otherDoor;
+    }
+    private static void statistics(HashMap<Integer, Boolean> results, int i) {
+        long wins = results.values().stream().filter(Boolean::booleanValue).count();
+        int losses = i - (int) wins;
+        double winsShare = (double) wins / losses * 100;
+
+        logger.info("Выигрыши: {}", wins);
+        logger.info("Проигрыши: {}", losses);
+        logger.info("Доля выигрышей: {}%", winsShare);
     }
 
 
