@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
@@ -18,28 +17,27 @@ public class Main {
         HashMap<Integer, Boolean> results = new HashMap<>();
         while (true) {
             int prizeDoor = prizeDoor();
-            Scanner userDoorScan = new Scanner(System.in);
+
             System.out.println("Новая игра №" + i);
             System.out.println("Перед вами двери под номером '1', '2' и '3'. За одной дверью спрятан автомобиль, за двумя другими - козы.");
             System.out.println("Дверь под каким номером выбираете('1', '2' и '3')?");
-            String stringDoor = userDoorScan.next();
+            String stringDoor = reader.readLine();
             int userDoor = Integer.parseInt(stringDoor);
 
             int otherDoor = otherDoor(prizeDoor,userDoor);
             goatDoor(prizeDoor,userDoor,otherDoor);
-            //int finalDoor = finalDoor(userDoor,otherDoor);
+            System.out.println("Вы можете поменять дверь " + userDoor + " на дверь " + otherDoor + ". Будете менять('да' или 'нет')?");
+            String doorChange = reader.readLine();
+            if (doorChange.equals("yes") || doorChange.equals("y") || doorChange.equals("да")) {
+                userDoor = otherDoor;
+            }
+
             System.out.println("\nХотите еще раз сыграть?");
             System.out.println("Введите 'да' или 'нет': ");
-            while (true) {
-                inputData = reader.readLine();
-
-                if (inputData.equals("yes") || inputData.equals("no") || inputData.equals("n") || inputData.equals("y") || inputData.equals("да") || inputData.equals("нет")) {
-                    break;
-                }
-
-            }
+            inputData = reader.readLine();
             if (inputData.equals("no") || inputData.equals("n") || inputData.equals("нет")) {
                 logger.info(String.valueOf(results));
+                reader.close();
                 break;
             } else i++;
         }
@@ -54,17 +52,6 @@ public class Main {
         }
         String goat = Integer.toString(goatDoor);
         System.out.println("Откроем дверь под номером " + goat + ". Там коза!");
-    }
-
-    // private static int finalDoor(int userDoor, int otherDoor) {
-    //    return 0;
-    //}
-
-    private static int userDoor(int i) throws IOException {
-        int userDoor = 0;
-        String stringDoor;
-
-        return userDoor;
     }
 
     private static int prizeDoor() {
