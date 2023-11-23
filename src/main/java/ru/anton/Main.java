@@ -26,11 +26,21 @@ public class Main {
 
             int otherDoor = otherDoor(prizeDoor,userDoor);
             goatDoor(prizeDoor,userDoor,otherDoor);
+
             System.out.println("Вы можете поменять дверь " + userDoor + " на дверь " + otherDoor + ". Будете менять('да' или 'нет')?");
             String doorChange = reader.readLine();
             if (doorChange.equals("yes") || doorChange.equals("y") || doorChange.equals("да")) {
                 userDoor = otherDoor;
             }
+
+            if (userDoor == prizeDoor) {
+                System.out.println("Вы победили! Машина ваша!");
+                results.put(i,true);
+            } else {
+                System.out.println("Увы - коза! Вы проиграли!");
+                results.put(i,false);
+            }
+
 
             System.out.println("\nХотите еще раз сыграть?");
             System.out.println("Введите 'да' или 'нет': ");
